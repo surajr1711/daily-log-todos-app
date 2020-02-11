@@ -20,13 +20,13 @@ const TodosContextProvider = (props) => {
       id: 2
     }
   ]);
-  const removeTodo = id => {
+  const removeItem = id => {
     setTodos(todos.filter(todo => todo.id !== id));
   }
-  const addTodo = title => {
+  const addItem = title => {
     setTodos([...todos, {title, id: uuid(), status: false, dateCreated: new Date().getTime()}]);
   }
-  const doneTodo = id => {
+  const toggleItemStatus = id => {
     setTodos(todos.map(todo => {
       if(todo.id === id) {
         todo.status = !todo.status;
@@ -36,7 +36,7 @@ const TodosContextProvider = (props) => {
     }));
   }
   return (
-    <TodosContext.Provider value={{todos, removeTodo, addTodo, doneTodo}}>
+    <TodosContext.Provider value={{todos, removeItem, addItem, toggleItemStatus}}>
       {props.children}      
     </TodosContext.Provider>
   )

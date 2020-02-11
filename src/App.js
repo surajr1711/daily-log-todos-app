@@ -1,7 +1,10 @@
 import React from 'react';
 import TodosContextProvider from './contexts/TodosContext';
-import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
+import DoneList from './components/DoneList';
+// import Lists from './components/Lists';
+
 
 const App = () => {
   return (
@@ -10,6 +13,8 @@ const App = () => {
         <h1>Todos app</h1>
         <TodoForm />
         <TodoList />
+        <DoneList />
+        {/* <Lists /> */}
       </TodosContextProvider>
     </div>
   );

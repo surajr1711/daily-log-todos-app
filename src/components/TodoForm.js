@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react'
 import { TodosContext } from '../contexts/TodosContext';
 
 const TodoForm = () => {
-  const {addTodo} = useContext(TodosContext);
+  const {addItem} = useContext(TodosContext);
   const [title, setTitle] = useState('');
   const handleSubmit = e => {
     e.preventDefault();
-    addTodo(title);
+    addItem(title);
     console.log(title);
     setTitle('');
   }

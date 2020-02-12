@@ -306,7 +306,7 @@ If we add the form in this same app.js, then the file will get very long. So fir
                ...
    ```
 
-4. Next we want to make done items go to a seperate list. We would need 2 lists to do this which will each contain list items with the same code. So to keep our code DRY (Don't repeat yourself), we'll extract the <li> code into its seperate component ListItem.js.
+4. Next we want to make done items go to a seperate list. We would need 2 lists to do this which will each contain list items with the same code. So to keep our code DRY (Don't repeat yourself), we'll extract the li code into its seperate component ListItem.js.
 
    ```
    import React, { useContext } from 'react'
@@ -394,8 +394,88 @@ If we add the form in this same app.js, then the file will get very long. So fir
    }
    ```
 
+## Add fontawesome icons
+
+1. To add fontawesome icons to our react project we need to install the react-fontawesome which is the fontawesome package designed to integrate with react. Docs can be checked out [here](https://github.com/FortAwesome/react-fontawesome).
+   `$ npm i --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome`
+   The above does not include brands and regular icons. For that use the below command.
+   `$ npm i --save @fortawesome/free-brands-svg-icons @fortawesome/free-regular-svg-icons`
+
+2. In App.js import library and the icons you want. Then add the icons to the library.
+
+   ```
+   import { library } from '@fortawesome/fontawesome-svg-core';
+   import { faCheck, faTimes, faRedo } from '@fortawesome/free-solid-svg-icons';
+
+   library.add( faCheck, faTimes, faRedo)
+   ```
+
+3. Now in in ListItem.js access those icons via the fontawesome component. It will take an icon prop with a string value of the icon's name. We'll add a check icon to the button if item status is false to represent a done action. A redo icon if the item status is true to represent an undo action. A times icon to represent a delete action.
+   ```
+   ...
+   const ListItem = ({todo}) => {
+     const {removeItem, toggleItemStatus} = useContext(TodosContext);
+     return (
+       <li>
+         <button onClick={() => toggleItemStatus(todo.id)}>
+           {
+             todo.status
+             ? <FontAwesomeIcon icon="redo" />
+             : <FontAwesomeIcon icon="check" />
+           }
+         </button>
+         ...
+       <button onClick={() => removeItem(todo.id)}>
+         <FontAwesomeIcon icon="times" />
+       </button>
+     ...
+   ```
+
+## Display message if there are no entries for todos or done list
+
+1. We'll display a message "No todos. Add some..." if there are no items in the TodosList.js.
+
+   ```
+   const TodoList = () => {
+     const {todos} = useContext(TodosContext);
+     let todoItems = todos.filter(todo => todo.status === false)
+     return (
+       <ul>
+         <h2>Todos</h2>
+         {
+           todoItems.length === 0
+           ? <p>No todos. Add some...</p>
+           : todoItems.map(todo => <ListItem todo={todo} key={todo.id}/>)
+         }
+       ...
+   ```
+
+2. And the same logic for the DoneList.js. Display "Nothing done recently..." if there are no items in the DoneList.
+   ```
+   const DoneList = () => {
+     const {todos} = useContext(TodosContext);
+     let doneItems = todos.filter(todo => todo.status === true)
+     return (
+       <ul>
+         <h2>Done</h2>
+         {
+           doneItems.length === 0
+           ? <p>Nothing done recently... </p>
+           : doneItems.map(todo => <ListItem todo={todo} key={todo.id}/>)
+         }
+       ...
+   ```
+
 ### Future features
 
 1. drag drop to arrange items in order.
 2. sort alphabetically by date created.
 3. make subgoal or promote
+4. add mongodb
+5. add session, cookies
+6. when to save to db vs storing in state
+7. user login
+8. images file upload
+9. add icons
+10. add styles
+11.

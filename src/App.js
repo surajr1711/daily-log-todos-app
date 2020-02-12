@@ -3,8 +3,11 @@ import TodosContextProvider from './contexts/TodosContext';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import DoneList from './components/DoneList';
-// import Lists from './components/Lists';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCheck, faTimes, faRedo } from '@fortawesome/free-solid-svg-icons';
+
+library.add( faCheck, faTimes, faRedo)
 
 const App = () => {
   return (
@@ -14,7 +17,6 @@ const App = () => {
         <TodoForm />
         <TodoList />
         <DoneList />
-        {/* <Lists /> */}
       </TodosContextProvider>
     </div>
   );

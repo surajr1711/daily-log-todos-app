@@ -4,10 +4,15 @@ import ListItem from './ListItem';
 
 const TodoList = () => {
   const {todos} = useContext(TodosContext);
+  let todoItems = todos.filter(todo => todo.status === false)
   return (
     <ul>
       <h2>Todos</h2>
-      {todos.filter(todo => todo.status === false).map(todo => <ListItem todo={todo} key={todo.id}/>)}
+      {
+        todoItems.length === 0
+        ? <p>No todos. Add some...</p>
+        : todoItems.map(todo => <ListItem todo={todo} key={todo.id}/>)
+      }
     </ul>
   )
 }
